@@ -14,19 +14,21 @@ post '/surveys' do
   puts "I made it to the controller"
   puts params
   "*"*80
-
-  new_survey = Survey.create(params[survey])
-  "#{new_survey.name}"
+  new_survey = Survey.create(params)
+  content_type :json
+  {id: new_survey.id, name: new_survey.name}.to_json
 end
 
 # create new question
 post '/questions' do
-  new_question = Question.create(params[question])
-  "#{new_question.id}"
+  new_question = Question.create(params)
+  content_type :json
+  {id: new_question.id, question: new_question.question}.to_json
 end
 
 # create new choice
 post '/choices' do
-  new_choice = Choice.create(params[choice])
-  "#{new_choice.id}"
+  new_choice = Choice.create(params)
+  content_type :json
+  {id: new_choice.id, choice: new_choice.choice}.to_json
 end

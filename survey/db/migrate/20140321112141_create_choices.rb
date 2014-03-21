@@ -4,5 +4,6 @@ class CreateChoices < ActiveRecord::Migration
       t.string :choice
       t.belongs_to :question
       t.timestamps
+    end
   end
 end
