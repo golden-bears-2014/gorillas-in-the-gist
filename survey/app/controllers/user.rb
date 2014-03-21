@@ -8,7 +8,6 @@ post '/sessions' do
   session[:email] = @user.email
   session[:id] = @user.id
     p "[LOG] session id #{session[:id]}"
-
   redirect '/surveys'
 end
 
