@@ -19,8 +19,9 @@ post '/users' do
 end
 
 get '/users/:id' do
-  current_user
+ current_user
   if @current_user
+    @surveys = Survey.where(user_id: @current_user.id)
     erb :user_profile
   else
     erb :_login

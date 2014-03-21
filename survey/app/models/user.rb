@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :completions
   validates :email, uniqueness: true, on: :create
   validates :name, presence: true
-  validates :password, length: {minimum : 10}
+  validates :password, length: {minimum : 6}
 
   def password
     @password ||= Password.new(password_hash)
