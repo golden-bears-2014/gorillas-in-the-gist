@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
   has_many :surveys
   has_many :responses
   has_many :completions
-  # validates :email, uniqueness: true, on: :create
-  # validates :name, presence: true
-  # validates :password, length: {minimum : 6}
+  validates :email, uniqueness: true, on: :create
+  validates :name, presence: true
+  validates :password, length: {minimum: 6}
 
   def password
     @password ||= Password.new(password_hash)
