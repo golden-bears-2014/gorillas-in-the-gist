@@ -4,12 +4,17 @@ erb :_login
 end
 
 post '/sessions' do
-  session[:email] = User.email
-  session[:id] = User.id
+  @user = User.find_by_email(params[:email])
+  session[:email] = @user.email
+  session[:id] = @user.id
+    p "[LOG] session id #{session[:id]}"
+
+  redirect '/surveys'
 end
 
 delete '/sessions' do
   session[:id] = nil
+  redirect '/'
 end
 
 post '/users' do
@@ -19,11 +24,17 @@ post '/users' do
 end
 
 get '/users/:id' do
- current_user
-  if @current_user
-    @surveys = Survey.where(user_id: @current_user.id)
-    erb :user_profile
-  else
-    erb :_login
+ @user = current_user
+ # p "@@@@@@@@@@@@@@@@@@@@@@@@@"
+ # p @user.name
+ # p "@@@@@@@@@@@@@@@@@@@@@@@@@"
+ if @user
+   if @user.id == session[:id]
+    @surveys = Survey.where(user_id: @user.id)
+    p "@@@@@@@@@@@@@@@@@@@@@@@@@"
+    erb :user_profile#, :layout => :layout
+  end
+ else
+   erb :_login
   end
 end
