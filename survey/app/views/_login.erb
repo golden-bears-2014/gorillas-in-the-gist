@@ -1,0 +1,33 @@
+<h2>Login if you have an account with us</h2>
+<form action="/sessions" method="post">
+  <div>
+    Email:<input type="text" placeholder="example@example.com" name="email">
+  </div>
+
+  <div>
+    Password:<input type="password" name ="password" placeholder="atleast 6 characters">
+  </div>
+  <input type="submit" value="Submit">
+</form>
+
+<h2>Sign up if you are a new user</h2>
+<form action="/users" method="post">
+  <div>
+    Name:<input type="text" placeholder="your name" name="email">
+  </div>
+
+  <div>
+    Email:<input type="text" placeholder="example@example.com" name="email">
+  </div>
+  <div>
+    Password:<input type="password" name ="password" placeholder="atleast 6 characters">
+  </div>
+  <input type="submit" value="Submit">
+</form>
+
+
+<form action="/sessions" method="post">
+  <input type ="hidden" name = "_method" value="delete">
+  <input type ="submit" value ="Log Out">
+
+</form>
