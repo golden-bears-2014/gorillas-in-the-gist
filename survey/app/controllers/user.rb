@@ -19,5 +19,10 @@ post '/users' do
 end
 
 get '/users/:id' do
-
+  current_user
+  if @current_user
+    erb :user_profile
+  else
+    erb :_login
+  end
 end
