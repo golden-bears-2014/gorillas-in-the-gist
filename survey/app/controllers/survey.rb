@@ -15,7 +15,7 @@ post '/surveys' do
   puts params
   "*"*80
 
-  new_survey = Survey.create(params[survey])
+  new_survey = Survey.create(params)
   "#{new_survey.name}"
 end
 
