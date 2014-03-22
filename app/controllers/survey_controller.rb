@@ -12,7 +12,7 @@ end
 post '/surveys' do
   "*"*80
   puts "I made it to the controller"
-  puts params
+  p params
   "*"*80
   # new_survey = Survey.create(params)
   # content_type :json

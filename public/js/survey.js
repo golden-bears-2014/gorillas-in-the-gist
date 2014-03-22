@@ -2,22 +2,14 @@ $(document).ready(function(){
   thisSurvey = new Survey
   $('#surveyName').on('blur', function(){ thisSurvey.name = this.value })
   $('#addQuestion').on('click', thisSurvey.addQuestion.bind(thisSurvey))
-  // $('.questionField').on('blur', blurQuestionFunction)
-  // $('.choiceField').on('blur', blurChoiceFunction)
   thisSurvey.saveSurvey()
  })
 
-  // find the questionId
-     // split the name on _
-     // pop() the array
-     // convert that value to integer. parseInt(value)
-  // find the question in thisSurvey.questions. the index will be questionId.
-  // the question.question = this.value where this is the field we're calling blur on.
 function blurQuestionFunction(){
   var qName = this.name.split("_")
   var qId = parseInt(qName.pop())
   var theQuestion = thisSurvey.questions[qId-1]
-  theQuestion.question = this.value
+  if (this.value){ theQuestion.question = this.value }
 }
 
 function blurChoiceFunction(){
@@ -25,11 +17,11 @@ function blurChoiceFunction(){
   var qId = parseInt(cName[1])
   var cId = parseInt(cName[2])
   var theChoice = thisSurvey.questions[qId-1].choices[cId-1]
-  theChoice.choice = this.value
+  if (this.value){ theChoice.choice = this.value }
 }
 
 function Survey() {
-  this.id = 1 //this is arbitrary, but necessary
+  this.id = 1 //arbitrary
   this.questions = []
   this.name = "undefined"
 }
@@ -71,8 +63,9 @@ Question.prototype.renderField = function(){
   questionName = '"question_'+this.id+'"'
   var newDiv = $('<div id="'+this.id+'">')
   var inputField = $('<input class="questionField" type="text" name='+questionName+'>')
+  var newChoiceLink = $('<a class="addChoice" href="#">Add choice</a>')
   inputField.on('blur', blurQuestionFunction)
-  $(newDiv).append(inputField)
+  $(newDiv).append(inputField).append(newChoiceLink)
   $('#questions').append(newDiv)
 }
 
@@ -90,7 +83,6 @@ Survey.prototype.saveSurvey = function() {
     e.preventDefault()
     console.log("hi katie")
     survey_content = JSON.stringify(thisSurvey)
-    debugger
     $.ajax({
       type: this.method,
       url: this.action,
@@ -103,6 +95,5 @@ Survey.prototype.saveSurvey = function() {
   })
 }
 
-// serialize data
 
 
