@@ -1,7 +1,14 @@
-<div class="container">
-  <h1> All Surveys </h1>
-  <% @surveys.each do |s| %>
-    <a href="/surveys/<%= s.id %>"><%= s.name %></a><br>
-  <% end %>
-  <a href="/surveys/new">Create a new Survey</a>
-</div>
+<h1> All Surveys </h1>
+<% @surveys.each do |s| %>
+<a href="/surveys/<%= s.id %>"><%= s.name %></a>
+  <br>
+<% end %>
+<br>
+<br>
+<a href="/surveys/new"><button type="button">Create a new Survey</button></a>
+<br>
+<br>
+<a href="/users/<%= session[:id] %>"><button type="button">Go to your profile page</button></a>
+<br>
+<br>
+<%= erb :_logout %>

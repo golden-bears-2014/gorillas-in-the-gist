@@ -12,7 +12,12 @@ post '/sessions' do
 end
 
 delete '/sessions' do
-  session[:id] = nil
+  session.clear
+  redirect '/'
+end
+
+get '/logout' do
+  session.clear
   redirect '/'
 end
 
@@ -24,13 +29,10 @@ end
 
 get '/users/:id' do
  @user = current_user
- # p "@@@@@@@@@@@@@@@@@@@@@@@@@"
- # p @user.name
- # p "@@@@@@@@@@@@@@@@@@@@@@@@@"
  if @user
    if @user.id == session[:id]
     @surveys = Survey.where(user_id: @user.id)
-    p "@@@@@@@@@@@@@@@@@@@@@@@@@"
+    @surveys_taken = Completion.where(user_id: @user.id)
     erb :user_profile#, :layout => :layout
   end
  else
