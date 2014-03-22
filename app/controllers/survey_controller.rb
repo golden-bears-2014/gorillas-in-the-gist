@@ -14,9 +14,9 @@ post '/surveys' do
   puts "I made it to the controller"
   puts params
   "*"*80
-  new_survey = Survey.create(params)
-  content_type :json
-  {id: new_survey.id, name: new_survey.name}.to_json
+  # new_survey = Survey.create(params)
+  # content_type :json
+  # {id: new_survey.id, name: new_survey.name}.to_json
 end
 
 # create new question

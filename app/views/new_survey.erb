@@ -1,37 +1,18 @@
 <div class="container">
   <h1>Create Survey</h1>
 
-  <form action="/surveys" method="post" id="new-survey">
-    <label class="label" for="name">Name:</label>
-    <input type="text" name="name"><br>
-    <!-- once users can log in, id will come from session current_user.id: -->
-    <input type="hidden" name="user_id" value="1">
-    <input type="submit" value="Create Survey">
-  </form>
-  <h2 id="title"><!-- Survey Name will append here< --></h2>
+ <form action="/surveys" method="post" id="new-survey">
+  <label class="label" for="name">Name:</label>
+  <input type="input" name="name">
+  <div id="questions">
+
+  </div>
+  <a href="#" id="addQuestion">Add Question</a>
+  <input type="submit" value="Save Survey">
+</form>
 
 
-  <form action="/questions" method="post" id="new-question">
-    <label class="label" for="name">Question:</label>
-    <input type="text" name="question"><br>
-    <input id="survey_id_for_question" type="hidden" name="survey_id" value="">
-    <input type="submit" value="Add Question">
-  </form>
-  <ul id="questions">
-
-      <ul id="choices">
-      <!-- Choices will append here as nested <li>s -->
-      </ul>
-  <!-- Questions will append here as <li>s -->
-  </ul>
-
-
-  <form action="/choices" method="post" id="new-choice">
-    <label class="label" for="name">Choice:</label>
-    <input type="text" name="choice"><br>
-    <input id="question_id_for_choice" type="hidden" name="question_id" value="">
-    <input type="submit" value="Add Choice">
-  </form>
 
 
 </div>
+
