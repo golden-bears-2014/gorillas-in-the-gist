@@ -1,0 +1,28 @@
+
+<h1><%= @survey.name %> Survey</h1>
+
+<div id="responses">
+  <% @survey.questions.each do |q| %>
+    <form action="/responses" method="post"> 
+      <fieldset>
+        <legend><%= q.question %></legend>
+        <% q.choices.each do |c| %>
+          <input type="radio" name="choice_id" value="<%= c.id %>"><%= c.choice %><br>
+        <% end %>
+        <input type="hidden" name="user_id" value="<%= session[:id] %>">
+        <input type="submit" value="Submit Answer">
+      </fieldset>
+    </form>
+  <% end %>
+</div>
+
+<div id="completion">
+  <form action="/completions" method="post">
+  <input type="hidden" name="user_id" value="<%= session[:id] %>">
+  <input type="hidden" name="survey_id" value="<%= @survey.id %>">
+    <input type="submit" value="Finish Survey">
+  </form>
+</div>
+
+
+<script src="/js/response.js"></script>
