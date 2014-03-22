@@ -1,7 +1,7 @@
-<div class="container">
-  <h1> All Surveys </h1>
-  <% @surveys.each do |s| %>
-    <a href="/surveys/<%= s.id %>"><%= s.name %></a><br>
-  <% end %>
-  <a href="/surveys/new">Create a new Survey</a>
-</div>
+<h1> All Surveys </h1>
+<% @surveys.each do |s| %>
+  <a href="/surveys/<%= s.id %>"><%= s.name %></a><br>
+<% end %>
+<br>
+<br>
+<a href="/surveys/new">Create a new Survey</a>
