@@ -12,7 +12,12 @@ post '/sessions' do
 end
 
 delete '/sessions' do
-  session[:id] = nil
+  session.clear
+  redirect '/'
+end
+
+get '/logout' do
+  session.clear
   redirect '/'
 end
 
