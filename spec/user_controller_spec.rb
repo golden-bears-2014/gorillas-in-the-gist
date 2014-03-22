@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'UserController' do
-
+  
   describe 'user can access application home page: ' do
     it 'loads the index page' do
       get "/"
@@ -10,7 +10,7 @@ describe 'UserController' do
   end
 
   describe 'user can sign in: ' do
-    let(:current_user){ User.create( name: 'Fake user',
+    let(:signin_user){ User.create( name: 'Fake user',
                                      email: 'fake@fake.com',
                                      password: '123456') }
 
@@ -33,11 +33,6 @@ describe 'UserController' do
                               email: 'pretty_email@pretty.com',
                               password: 'abcd1234') }
 
-    it 'saves the new user to database' do
-      pending
-      # expect{ post('/users', new_user)}.to change(User, :count).by(1)
-    end
-
     it 'creates a new session email variable equal to current user email' do
       user_params = { email: 'pretty_email@pretty.com',
                       password: 'abcd1234' }
@@ -53,7 +48,12 @@ describe 'UserController' do
       expect(session[:id]).to eq(current_user[:id])
     end
 
-    it 'redirects to surveys page' do
+    it 'saves the new user to database' do
+
+      expect(User.last.email).to eq('pretty_email@pretty.com')
+    end
+
+    it 'redirects signed-up user to surveys page' do
       pending
     end
   end
