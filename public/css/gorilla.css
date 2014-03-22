@@ -1,0 +1,42 @@
+/* ----------------------------------------------------------------------------------------------------------------------------
+== SILVERBACK
+** ---------------------------------------------------------------------------------------------------------------------------- */
+body{
+  background-color: #d3ff99;
+}
+
+#silverback {
+  position: relative;
+  z-index: 0;
+  min-width: 200px;
+  min-height: 200px;
+  padding: 120px 200px 50px;
+  margin: 0;
+/*  font-size: 2.5em;
+  font-weight: normal;
+  line-height: 1.2;
+  text-align: center;*/
+  background: #d3ff99 url(/images/vines-back.png) -10% 0 repeat-x;
+}
+#silverback:before,
+#silverback:after {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 100px;
+}
+#silverback:before {
+  content: url(/images/gorilla-1.png);
+  padding-left: 3%;
+  text-align: left;
+  background: transparent url(/images/vines-mid.png) 300% 0 repeat-x;
+}
+#silverback:after {
+  content: url(/images/gorilla-2.png);
+  padding-right: 3%;
+  text-align: right;
+  background: transparent url(/images/vines-front.png) 70% 0 repeat-x;
+}
