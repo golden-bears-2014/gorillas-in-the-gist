@@ -1,9 +1,32 @@
 $(document).ready(function(){
   thisSurvey = new Survey
-  $('#addQuestion').on('click', function(){thisSurvey.addQuestion()})
+  $('#surveyName').on('blur', function(){ thisSurvey.name = this.value })
+  $('#addQuestion').on('click', thisSurvey.addQuestion.bind(thisSurvey))
+  // $('.questionField').on('blur', blurQuestionFunction)
+  // $('.choiceField').on('blur', blurChoiceFunction)
   thisSurvey.saveSurvey()
-
  })
+
+  // find the questionId
+     // split the name on _
+     // pop() the array
+     // convert that value to integer. parseInt(value)
+  // find the question in thisSurvey.questions. the index will be questionId.
+  // the question.question = this.value where this is the field we're calling blur on.
+function blurQuestionFunction(){
+  var qName = this.name.split("_")
+  var qId = parseInt(qName.pop())
+  var theQuestion = thisSurvey.questions[qId-1]
+  theQuestion.question = this.value
+}
+
+function blurChoiceFunction(){
+  var cName = this.name.split("_")
+  var qId = parseInt(cName[1])
+  var cId = parseInt(cName[2])
+  var theChoice = thisSurvey.questions[qId-1].choices[cId-1]
+  theChoice.choice = this.value
+}
 
 function Survey() {
   this.id = 1 //this is arbitrary, but necessary
@@ -32,37 +55,46 @@ Question.prototype.bindChoiceButton = function(){
 }
 
 Question.prototype.addChoice = function(){
-  var choice = new Choice(this.id)
+  var choiceIndex = this.choices.length + 1
+  var choice = new Choice(this.id, choiceIndex)
   this.choices.push(choice)
   choice.renderField()
 }
 
-var Choice = function(questionId) {
+var Choice = function(questionId,choiceIndex) {
     this.questionId = questionId
+    this.id = choiceIndex
     this.choice = undefined
 }
 
 Question.prototype.renderField = function(){
-  $('#questions').append('<div id="'+this.id+'" class="question">Question: <input type="text" name="question_'+this.id+'"><a class="addChoice" href="#">Add choice</a></div>')
+  questionName = '"question_'+this.id+'"'
+  var newDiv = $('<div id="'+this.id+'">')
+  var inputField = $('<input class="questionField" type="text" name='+questionName+'>')
+  inputField.on('blur', blurQuestionFunction)
+  $(newDiv).append(inputField)
+  $('#questions').append(newDiv)
 }
 
 Choice.prototype.renderField = function() {
-  $('#'+this.questionId+'').append('<div class="choice">Choice: <input type="text" name="choice_'+this.questionId+'"></div>')
+  choiceName = '"choice_'+this.questionId+'_'+this.id+'"'
+  var newDiv = $('<div>')
+  var inputField = $('<input class="choiceField" type="text" name='+choiceName+'>')
+  inputField.on('blur', blurChoiceFunction)
+  $(newDiv).append(inputField)
+  $('#'+this.questionId+'').append(newDiv)
 }
 
 Survey.prototype.saveSurvey = function() {
   $('form').on('submit', function(e) {
     e.preventDefault()
     console.log("hi katie")
-    survey_content = $(this).serialize()
-// survey_content looks like this: "name=test&question_1=one&choice_1=c1&choice_1=c2&choice_1=c3"
-// need name[survey_content]
+    survey_content = JSON.stringify(thisSurvey)
     debugger
     $.ajax({
       type: this.method,
       url: this.action,
       data: survey_content
-      // debugger
     }).done(function(){
       console.log("done!")
     }).fail(function(){
@@ -71,13 +103,6 @@ Survey.prototype.saveSurvey = function() {
   })
 }
 
-Survey.prototype.
-    // }).done(function(){
-    //   console.log("successfully sent!")
-    //   )}.fail(function(){
-    //     console.log("failed to send!")
-    //   })
-    // })
+// serialize data
 
-    // debugger
 
