@@ -1,6 +1,5 @@
 require 'faker'
 
-
 user = User.new(name: Faker::Name.name, email: Faker::Internet.email)
 user.password = "password"
 user.save!
