@@ -27,6 +27,7 @@ get '/users/:id' do
  if @user
    if @user.id == session[:id]
     @surveys = Survey.where(user_id: @user.id)
+    @surveys_taken = Completion.where(user_id: @user.id)
     erb :user_profile#, :layout => :layout
   end
  else

@@ -27,10 +27,15 @@
 <button id="submit">Submit Survey</button>
 <div id="finish">
   <h2>Thanks for completing this survey.</h2>
-  <a href="/users/<%= session[:id] %>">Return to your profile page</a>
+  <a href="/users/<%= session[:id] %>"><button type="button">Go to your profile page</button></a>
   <br>
-  <a href="/surveys">Pick another survey to complete</a>
   <br>
-  <a href="#">Log out</a>
+  <a href="/surveys"><button type="button">Pick another survey to complete</button></a>
+  <br>
+  <br>
+  <a href="/surveys/new"><button type="button">Create a new Survey</button></a>
+  <br>
+  <br>
+  <%= erb :_logout %>
 </div>
 <script src="/js/response.js"></script>

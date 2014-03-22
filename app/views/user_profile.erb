@@ -1,5 +1,25 @@
-<div>
-  <%= @current_user.name %>
-  <%=  @current_user.email %>
-  <%= @surveys.name %>
-</div>
+<h1><%= @current_user.name %>'s Gorillas in the Gist Profile</h1>
+
+
+<h2>Surveys Created</h2>
+<ul>
+  <% @surveys.each do |survey| %>
+    <li><%= survey.name %></li>
+  <% end %>
+</ul>
+
+<h2>Surveys Completed</h2>
+<ul>
+  <% @surveys_taken.each do |taken| %>
+    <li><%= taken.survey.name %> - taken: <%= taken.created_at.strftime("%m/%d/%Y %I:%M%P")  %></li>
+  <% end %>
+</ul>
+<br>
+<br>
+<a href="/surveys/new"><button type="button">Create a new Survey</button></a>
+<br>
+<br>
+<a href="/surveys"><button type="button">Pick a survey to complete</button></a>
+<br>
+<br>
+<%= erb :_logout %>
