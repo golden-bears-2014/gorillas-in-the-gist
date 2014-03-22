@@ -24,13 +24,9 @@ end
 
 get '/users/:id' do
  @user = current_user
- # p "@@@@@@@@@@@@@@@@@@@@@@@@@"
- # p @user.name
- # p "@@@@@@@@@@@@@@@@@@@@@@@@@"
  if @user
    if @user.id == session[:id]
     @surveys = Survey.where(user_id: @user.id)
-    p "@@@@@@@@@@@@@@@@@@@@@@@@@"
     erb :user_profile#, :layout => :layout
   end
  else
