@@ -4,14 +4,14 @@
 <h2>Surveys Created</h2>
 <ul>
   <% @surveys.each do |survey| %>
-    <li><%= survey.name %></li>
+    <li><%= survey.name %></li> | <a href="/results/<%= survey.id %>">See results</a>
   <% end %>
 </ul>
 
 <h2>Surveys Completed</h2>
 <ul>
   <% @surveys_taken.each do |taken| %>
-    <li><%= taken.survey.name %> - taken: <%= taken.created_at.strftime("%m/%d/%Y %I:%M%P")  %></li>
+    <li><%= taken.survey.name %> - taken: <%= taken.created_at.strftime("%m/%d/%Y %I:%M%P")  %>  | <a href="/results/<%= taken.survey.id %>">See results</a></li>
   <% end %>
 </ul>
 <br>
