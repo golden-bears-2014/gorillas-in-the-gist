@@ -1,0 +1,12 @@
+<h1><%= @survey.name %> Survey Results</h1>
+<% @survey.questions.each do |question| %>
+  <h4><%= question.question %></h4>
+  <table>
+    <% question.choices.each do |choice| %>
+    <tr>
+      <td><%= choice.choice %>:&nbsp;</td>
+      <td>&nbsp;<img src="/images/bar.gif" height="10px" width="<%= choice.responses.count * 10 %>px">&nbsp;(<%= choice.responses.count %>)</td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
