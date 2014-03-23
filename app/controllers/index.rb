@@ -13,15 +13,25 @@ get '/surveys/new' do
 end
 
 post '/surveys' do
-debugger
-  survey_data = JSON.parse(params[:survey])
-
-survey_data["name"]
+# debugger
+survey_data = JSON.parse(params[:survey])
 
 
-
-  # new_survey = Survey.create(params)
-  # {id: new_survey.id, name: new_survey.name}.to_json
+survey = Survey.create(name: survey_data["name"])
+# debugger
+survey_data["questions"].each do |question|
+  this_question = Question.create(question: question["question"])
+  question["choices"].each do |choice|
+    new_choice = Choice.create(choice: choice["choice"])
+    this_question.choices << new_choice
+  end
+  survey.questions << this_question
+end
+current_user = User.find(1)
+# current_user = User.find(session[:id])
+current_user.surveys << survey
+"hi katie"
+# {id: survey.id, name: survey.name}.to_json
 end
 
 # display survey to take
