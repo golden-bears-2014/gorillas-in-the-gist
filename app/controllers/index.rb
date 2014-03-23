@@ -1,27 +1,51 @@
 get '/' do
-  # Look in app/views/index.erb
   erb :index
 end
 
-# get '/bands' do
-#   @band_names = Band.all.map(&:name)
-#   erb :bands
-# end
+# all the surveys listed
+get '/surveys' do
+  @surveys = Survey.all
+  erb :surveys
+end
 
-# post '/bands' do
-#   new_band = Band.create!(name: params[:name])
-#   redirect "/bands/#{new_band.id}"
-# end
+get '/surveys/new' do
+  erb :new_survey
+end
 
-# get '/bands/new' do
-#   erb :new_band
-# end
+post '/surveys' do
+  "*"*80
+  puts "I made it to the controller"
+  p params
+  "*"*80
+  # new_survey = Survey.create(params)
+  # content_type :json
+  # {id: new_survey.id, name: new_survey.name}.to_json
+end
 
-# get '/bands/:id' do
-#   @band = Band.find(params[:id])
-#   erb :show_band
-# end
+# display survey to take
+get '/surveys/:id/?' do
+  # if session[:id] == nil
+  #   redirect '/'
+  # else
+    @survey = Survey.find(params[:id])
+    erb :show_survey
+  # end
+end
 
-# get '/info' do
-#   Demo.new(self).info
-# end
+# display all results for particular survey
+get '/results/:id?' do
+  @survey = Survey.find(params[:id])
+  erb :show_results
+end
+
+# add completion to database
+post '/completions/?' do
+  Completion.create!(params)
+  "completion route hit"
+end
+
+# add response to database
+post '/responses/?' do
+  Response.create!(params)
+  "response route hit"
+end
