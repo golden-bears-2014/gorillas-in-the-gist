@@ -86,7 +86,7 @@ Survey.prototype.saveSurvey = function() {
     $.ajax({
       type: this.method,
       url: this.action,
-      data: survey_content
+      data: { survey: survey_content }
     }).done(function(){
       console.log("done!")
     }).fail(function(){

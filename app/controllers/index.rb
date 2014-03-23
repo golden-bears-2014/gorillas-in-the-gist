@@ -13,8 +13,12 @@ get '/surveys/new' do
 end
 
 post '/surveys' do
+debugger
+  survey_data = JSON.parse(params[:survey])
 
-  params
+survey_data["name"]
+
+
 
   # new_survey = Survey.create(params)
   # {id: new_survey.id, name: new_survey.name}.to_json
