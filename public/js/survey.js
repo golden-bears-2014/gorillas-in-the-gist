@@ -82,13 +82,14 @@ Survey.prototype.saveSurvey = function() {
   $('form').on('submit', function(e) {
     e.preventDefault()
     survey_content = JSON.stringify(thisSurvey)
-    debugger
     $.ajax({
       type: this.method,
       url: this.action,
       data: { survey: survey_content }
-    }).done(function(){
-      console.log("done!")
+    }).success(function(server_data){
+      var survey = JSON.parse(server_data)
+      window.location = "/surveys/"+survey.id
+      console.log("done!", server_data)
     }).fail(function(){
       console.log("fail!")
     })

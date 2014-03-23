@@ -14,24 +14,25 @@ end
 
 post '/surveys' do
 # debugger
+p "*"*80
+p params
+p params[:survey]
 survey_data = JSON.parse(params[:survey])
-
-
+p survey_data
 survey = Survey.create(name: survey_data["name"])
 # debugger
-survey_data["questions"].each do |question|
-  this_question = Question.create(question: question["question"])
-  question["choices"].each do |choice|
-    new_choice = Choice.create(choice: choice["choice"])
-    this_question.choices << new_choice
+  survey_data["questions"].each do |question|
+    this_question = Question.create(question: question["question"])
+    question["choices"].each do |choice|
+      new_choice = Choice.create(choice: choice["choice"])
+      this_question.choices << new_choice
+    end
+    survey.questions << this_question
   end
-  survey.questions << this_question
-end
 current_user = User.find(1)
 # current_user = User.find(session[:id])
 current_user.surveys << survey
-"hi katie"
-# {id: survey.id, name: survey.name}.to_json
+{id: survey.id}.to_json
 end
 
 # display survey to take
