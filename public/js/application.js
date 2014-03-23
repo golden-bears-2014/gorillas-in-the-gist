@@ -1,101 +1,100 @@
-$(document).ready(function () {
-    $('#new-question').hide()
-    $('#new-choice').hide()
-    // intercept the form submission event using jQuery:
-  $('#new-survey').on('submit', function(e){
-    // prevent the default action for that event from happening:
+$(document).ready(function(){
+  thisSurvey = new Survey
+  $('#surveyName').on('blur', function(){ thisSurvey.name = this.value })
+  $('#addQuestion').on('click', thisSurvey.addQuestion.bind(thisSurvey))
+  thisSurvey.saveSurvey()
+ })
+
+function blurQuestionFunction(){
+  var qName = this.name.split("_")
+  var qId = parseInt(qName.pop())
+  var theQuestion = thisSurvey.questions[qId-1]
+  if (this.value){ theQuestion.question = this.value }
+}
+
+function blurChoiceFunction(){
+  var cName = this.name.split("_")
+  var qId = parseInt(cName[1])
+  var cId = parseInt(cName[2])
+  var theChoice = thisSurvey.questions[qId-1].choices[cId-1]
+  if (this.value){ theChoice.choice = this.value }
+}
+
+function Survey() {
+  this.id = 1 //arbitrary
+  this.questions = []
+  this.name = "undefined"
+}
+
+Survey.prototype.addQuestion = function(){
+  var questionIndex = this.questions.length + 1
+  var question = new Question(this.id, questionIndex)
+  this.questions.push(question)
+  question.renderField()
+  question.bindChoiceButton()
+}
+
+var Question = function(surveyId,questionIndex) {
+  this.surveyId = surveyId
+  this.id =  questionIndex
+  this.choices = []
+  this.question = undefined
+}
+
+Question.prototype.bindChoiceButton = function(){
+  question = this
+  $('.addChoice').on('click', function(){ question.addChoice()})
+}
+
+Question.prototype.addChoice = function(){
+  var choiceIndex = this.choices.length + 1
+  var choice = new Choice(this.id, choiceIndex)
+  this.choices.push(choice)
+  choice.renderField()
+}
+
+var Choice = function(questionId,choiceIndex) {
+    this.questionId = questionId
+    this.id = choiceIndex
+    this.choice = undefined
+}
+
+Question.prototype.renderField = function(){
+  questionName = '"question_'+this.id+'"'
+  var newDiv = $('<div id="'+this.id+'">')
+  var inputField = $('<input class="questionField" type="text" name='+questionName+'>')
+  var newChoiceLink = $('<a class="addChoice" href="#">Add choice</a>')
+  inputField.on('blur', blurQuestionFunction)
+  $(newDiv).append(inputField).append(newChoiceLink)
+  $('#questions').append(newDiv)
+}
+
+Choice.prototype.renderField = function() {
+  choiceName = '"choice_'+this.questionId+'_'+this.id+'"'
+  var newDiv = $('<div>')
+  var inputField = $('<input class="choiceField" type="text" name='+choiceName+'>')
+  inputField.on('blur', blurChoiceFunction)
+  $(newDiv).append(inputField)
+  $('#'+this.questionId+'').append(newDiv)
+}
+
+Survey.prototype.saveSurvey = function() {
+  $('form').on('submit', function(e) {
     e.preventDefault()
-    // serialize the form's key-value pairs
-    form_content = $(this).serialize()
-    // use jQuery to submit an AJAX post to the form's action:
+    console.log("hi katie")
+    survey_content = JSON.stringify(thisSurvey)
     $.ajax({
       type: this.method,
       url: this.action,
-      data: form_content,
-      // dataType: "json"
-
-    }).done(function(server_content){
-
-      console.log('done')
-      console.log('server_content: ' + server_content)
-      // hide survey form
-      $('#new-survey').hide()
-      // show survey name
-      $('#title').append(server_content.name)
-      var surveyId = server_content.id
-      console.log(surveyId)
-      $('#survey_id_for_question').val(surveyId)
-      // debugger
-      // show question form:
-      $('#new-question').show()
-
-
+      data: { survey: survey_content }
+    }).success(function(server_data){
+      var survey = JSON.parse(server_data)
+      window.location = "/surveys/"+survey.id
+      console.log("done!", server_data)
     }).fail(function(){
-      console.log('fail')
+      console.log("fail!")
     })
-
   })
+}
 
 
-    // intercept the form submission event using jQuery:
-  $('#new-question').on('submit', function(e){
-    // prevent the default action for that event from happening:
-    e.preventDefault()
-    // serialize the form's key-value pairs
-    form_content = $(this).serialize()
-    // use jQuery to submit an AJAX post to the form's action:
-    $.ajax({
-      type: this.method,
-      url: this.action,
-      data: form_content
-
-    }).done(function(server_content){
-      // hide question form, show choice form
-      $('#new-question').hide()
-      $('#new-choice').show()
-      // show new question
-      $('#questions').append('<li>' + server_content.question + '</li>')
-      var questionId = server_content.id
-      console.log(questionId)
-      $('#question_id_for_choice').val(questionId)
-      // show add choice button
-      console.log('done')
-      console.log('server_content: ' + server_content)
-
-    }).fail(function(){
-      console.log('fail')
-    })
-
-  })
-
-
-    // intercept the form submission event using jQuery:
-  $('#new-choice').on('submit', function(e){
-    // prevent the default action for that event from happening:
-    e.preventDefault()
-    // serialize the form's key-value pairs
-    form_content = $(this).serialize()
-    // use jQuery to submit an AJAX post to the form's action:
-    $.ajax({
-      type: this.method,
-      url: this.action,
-      data: form_content
-
-    }).done(function(server_content){
-      // show? hide?
-
-      // show new choice
-      $('#choices').append('<li>' + server_content.choice + '</li>')
-
-      // show add choice button
-      console.log('done')
-      console.log('server_content: ' + server_content)
-
-    }).fail(function(){
-      console.log('fail')
-    })
-
-  })
-
-
-});
