@@ -13,12 +13,10 @@ get '/surveys/new' do
 end
 
 post '/surveys' do
-  "*"*80
-  puts "I made it to the controller"
-  p params
-  "*"*80
+
+  params
+
   # new_survey = Survey.create(params)
-  # content_type :json
   # {id: new_survey.id, name: new_survey.name}.to_json
 end
 

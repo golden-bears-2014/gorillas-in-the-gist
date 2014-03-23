@@ -81,8 +81,8 @@ Choice.prototype.renderField = function() {
 Survey.prototype.saveSurvey = function() {
   $('form').on('submit', function(e) {
     e.preventDefault()
-    console.log("hi katie")
     survey_content = JSON.stringify(thisSurvey)
+    debugger
     $.ajax({
       type: this.method,
       url: this.action,
