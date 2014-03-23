@@ -96,4 +96,3 @@ Survey.prototype.saveSurvey = function() {
 }
 
 
-
