@@ -9,3 +9,18 @@
 th {
   text-align: left;
 }
+
+input {
+  margin: 10px;
+}
+
+.questionSet {
+  width: 75%;
+  margin: 5px 0;
+  padding-left: 10px;
+  border: 1px solid #ccc;
+}
+
+.choice {
+  margin-left: 20px;
+}
