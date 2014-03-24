@@ -61,17 +61,20 @@ var Choice = function(questionId,choiceIndex) {
 
 Question.prototype.renderField = function(){
   questionName = '"question_'+this.id+'"'
-  var newDiv = $('<div id="'+this.id+'">')
+  var newDiv = $('<div class="questionSet" id="'+this.id+'">')
   var inputField = $('<input class="questionField" type="text" name='+questionName+'>')
   var newChoiceLink = $('<a class="addChoice" href="#">Add choice</a>')
+  newDiv.text("Question "+this.id+":")
   inputField.on('blur', blurQuestionFunction)
+  // debugger
   $(newDiv).append(inputField).append(newChoiceLink)
   $('#questions').append(newDiv)
 }
 
 Choice.prototype.renderField = function() {
   choiceName = '"choice_'+this.questionId+'_'+this.id+'"'
-  var newDiv = $('<div>')
+  var newDiv = $('<div class="choice">')
+  newDiv.text("Option "+this.id+":")
   var inputField = $('<input class="choiceField" type="text" name='+choiceName+'>')
   inputField.on('blur', blurChoiceFunction)
   $(newDiv).append(inputField)
