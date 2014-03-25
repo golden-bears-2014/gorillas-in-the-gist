@@ -21,7 +21,7 @@
 
 <div id="completion">
   <form id="complete_form" action="/completions" method="post">
-    <!-- #CR don't pass sessions to the view -->
+    <!-- #CR don't pass sessions to the view use current user -->
     <input type="hidden" name="user_id" value="<%= session[:id] %>">
     <input type="hidden" name="survey_id" value="<%= @survey.id %>">
   </form>

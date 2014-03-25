@@ -52,10 +52,7 @@ get '/results/:id?' do
    @survey = Survey.find(params[:id])
   #CR use includes to avoid n+1 database hits
 
-  @survey = Survey.includes([:questions, {:choices => :responses}]).find(params[:id])
-#   @responses = @survey.choices.includes(:responses).all
-# @showring = Ring.includes([{:stones => :upcharges}, :variations]).find(params[:id])
-  p @survey.inspect
+#CR  @survey = Survey.includes([:questions, {:choices => :responses}]).find(params[:id])
   erb :show_results
 end
 
