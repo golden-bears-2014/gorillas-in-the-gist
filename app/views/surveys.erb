@@ -8,6 +8,7 @@
 <a href="/surveys/new"><button type="button">Create a new Survey</button></a>
 <br>
 <br>
+<!-- #CR This link isn't working - session[:id] not set? - use current_user helper method and don't display this link if there isn't a current_user / current_user.id -->
 <a href="/users/<%= session[:id] %>"><button type="button">Go to your profile page</button></a>
 <br>
 <br>

@@ -1,3 +1,4 @@
+<!-- Use current_user helper method not @current_user -->
 <h1><%= @current_user.name %>'s Gorillas in the Gist Profile</h1>
 
 
@@ -11,6 +12,7 @@
 <h2>Surveys Completed</h2>
 <ul>
   <% @surveys_taken.each do |taken| %>
+  <!-- #CR make a helper method for converting time -->
     <li><%= taken.survey.name %> - taken: <%= taken.created_at.strftime("%m/%d/%Y %I:%M%P")  %>  | <a href="/results/<%= taken.survey.id %>">See results</a></li>
   <% end %>
 </ul>
