@@ -1,7 +1,9 @@
+#CR Explore Factory Girl to create users that are available here.
+
 require 'spec_helper'
 
 describe 'UserController' do
-  
+
   describe 'user can access application home page: ' do
     it 'loads the index page' do
       get "/"
@@ -18,11 +20,11 @@ describe 'UserController' do
       get '/sessions/new'
       expect(last_response.body).to include('Login')
     end
- 
+
     it 'authenticates a current user' do
       pending
     end
-    
+
     it 'redirect signed-in user to Surveys page' do
       pending
     end
@@ -64,7 +66,7 @@ describe 'UserController' do
       expect(session).to be_empty
     end
   end
-  
+
 
   describe 'user has a profile page: ' do
     it 'allows the current user to see her profile page' do

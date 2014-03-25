@@ -5,9 +5,9 @@ end
 
 post '/sessions' do
   @user = User.find_by_email(params[:email])
-  session[:email] = @user.email
+  session[:email] = @user.email  #CR no need to set this in a session, you can refind it from the id
   session[:id] = @user.id
-    p "[LOG] session id #{session[:id]}"
+    p "[LOG] session id #{session[:id]}" #CR you are not checking for a valid user and giving error if not valid.
   redirect '/surveys'
 end
 
@@ -22,16 +22,18 @@ get '/logout' do
 end
 
 post '/users' do
+  #CR at current version ajax on 'form' is sending the wrong data here.
   create_user(params)
-  session[:login] =true
+  session[:login] =true  #CR later you look for session[:id] which isn't set here.
   redirect '/surveys'
 end
 
 get '/users/:id' do
+
  @user = current_user
  if @user
-   if @user.id == session[:id]
-    @surveys = Survey.where(user_id: @user.id)
+   if @user.id == session[:id] #CR how could this not be true?
+    @surveys = Survey.where(user_id: @user.id) #CR - use find
     @surveys_taken = Completion.where(user_id: @user.id)
     erb :user_profile#, :layout => :layout
   end

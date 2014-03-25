@@ -1,3 +1,5 @@
+<!-- #CR add id's to your forms to be able to use with ajax -->
+
 <h2>Login if you have an account with us</h2>
 <form action="/sessions" method="post">
   <div>
@@ -6,6 +8,7 @@
 
   <div>
     Password:<input type="password" name ="password" placeholder="atleast 6 characters">
+    <!-- #CR you aren't validating for >= 6 characters -->
   </div>
   <input type="submit" value="Submit">
 </form>

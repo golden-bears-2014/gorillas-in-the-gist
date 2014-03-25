@@ -3,13 +3,15 @@
 
 <div id="responses">
   <% @survey.questions.each do |q| %>
-    <form id="<%= q.id %>" action="/responses" method="post"> 
+    <form id="<%= q.id %>" action="/responses" method="post">
       <fieldset>
       <br>
         <legend><%= q.question %></legend>
         <% q.choices.each do |c| %>
+        <!-- #CR use arrays in params to make this cleaner choice[] -->
           <input type="radio" name="choice_id" id="<%= c.id %>" value="<%= c.id %>">&nbsp;&nbsp;<%= c.choice %><br><br>
         <% end %>
+        <!-- #CR don't pass sessions to the view - session is your server side data persistance.  -->
         <input type="hidden" name="user_id" value="<%= session[:id] %>">
       </fieldset>
     </form>
@@ -19,6 +21,7 @@
 
 <div id="completion">
   <form id="complete_form" action="/completions" method="post">
+    <!-- #CR don't pass sessions to the view -->
     <input type="hidden" name="user_id" value="<%= session[:id] %>">
     <input type="hidden" name="survey_id" value="<%= @survey.id %>">
   </form>
@@ -28,6 +31,7 @@
 <div id="finish">
   <h2>Thanks for completing this survey.</h2>
   <a href="/users/<%= session[:id] %>"><button type="button">Go to your profile page</button></a>
+  <!-- #CR don't use br tags - use margin and padding in css -->
   <br>
   <br>
   <a href="/surveys"><button type="button">Pick another survey to complete</button></a>

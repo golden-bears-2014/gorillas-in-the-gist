@@ -3,4 +3,5 @@ class Survey < ActiveRecord::Base
   has_many :completions
   has_many :questions
   has_many :choices, through: :questions
+  #CR add validations to this and all models
 end

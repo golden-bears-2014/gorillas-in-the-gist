@@ -5,6 +5,7 @@
     <% question.choices.each do |choice| %>
     <tr>
       <td><%= choice.choice %>:&nbsp;</td>
+      <!-- #CR put graph in a partial -->
       <td>&nbsp;<img src="/images/bar.gif" height="10px" width="<%= choice.responses.count * 10 %>px">&nbsp;(<%= choice.responses.count %>)</td>
     </tr>
     <% end %>

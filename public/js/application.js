@@ -3,9 +3,11 @@ $(document).ready(function(){
   $('#surveyName').on('blur', function(){ thisSurvey.name = this.value })
   $('#addQuestion').on('click', thisSurvey.addQuestion.bind(thisSurvey))
   thisSurvey.saveSurvey()
+  // #CR this should be bindSave()   save doesn't happen until submit.
  })
 
 function blurQuestionFunction(){
+  // #CR might not need qName, qid if using nested params
   var qName = this.name.split("_")
   var qId = parseInt(qName.pop())
   var theQuestion = thisSurvey.questions[qId-1]
@@ -14,6 +16,8 @@ function blurQuestionFunction(){
 
 function blurChoiceFunction(){
   var cName = this.name.split("_")
+  // #CR might not need qName, qid if using nested params
+
   var qId = parseInt(cName[1])
   var cId = parseInt(cName[2])
   var theChoice = thisSurvey.questions[qId-1].choices[cId-1]
@@ -38,11 +42,13 @@ var Question = function(surveyId,questionIndex) {
   this.surveyId = surveyId
   this.id =  questionIndex
   this.choices = []
+  // #CR - naming question has question? how about text
   this.question = undefined
 }
 
 Question.prototype.bindChoiceButton = function(){
   question = this
+  // #CR nice this is that pattern
   $('.addChoice').on('click', function(){ question.addChoice()})
 }
 
@@ -60,6 +66,7 @@ var Choice = function(questionId,choiceIndex) {
 }
 
 Question.prototype.renderField = function(){
+  // #CR create a template that you fill in.
   questionName = '"question_'+this.id+'"'
   var newDiv = $('<div class="questionSet" id="'+this.id+'">')
   var inputField = $('<input class="questionField" type="text" name='+questionName+'>')
@@ -80,17 +87,20 @@ Choice.prototype.renderField = function() {
   $(newDiv).append(inputField)
   $('#'+this.questionId+'').append(newDiv)
 }
-
+// #CR this is getting trigged on ALL form submissions, including login which breaks your
+//login! Use an ID
 Survey.prototype.saveSurvey = function() {
-  $('form').on('submit', function(e) {
+  $('form#new-survey').on('submit', function(e) {
     e.preventDefault()
     console.log("hi katie")
+    // #CR why not use form.serialize() here?
     survey_content = JSON.stringify(thisSurvey)
     $.ajax({
       type: this.method,
       url: this.action,
       data: { survey: survey_content }
     }).success(function(server_data){
+      // #CR server_data should be a json object already
       var survey = JSON.parse(server_data)
       window.location = "/surveys/"+survey.id
       console.log("done!", server_data)
